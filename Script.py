@@ -22,6 +22,12 @@ Note:- Give a user details
     ALIVE_TXT ="""<b>ALIVE MODULE</b>
 • /alive - check me alive or dead🤧
 Just for a rasam😂"""
+    IMAGE_TXT = """• Help : Image
+
+• This Command Help You To Edit Image Very Easly 😇
+
+• Command And Usage :
+• Just Send Me A Image To Edit ✨"""
     RESTRIC_TXT = """Help: <b>Restrictions</b>    
 
 Some people need to be publicly banned; spammers, annoyances, or just trolls.
