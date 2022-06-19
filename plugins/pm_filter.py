@@ -751,8 +751,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton(text="ʀᴇᴍᴏᴠᴇ ʙɢ", callback_data="removebg")
             ],[
             InlineKeyboardButton(text="ᴄʟᴏꜱᴇ ⛔️", callback_data="close_data")
-           
-            reply_markup = InlineKeyboardMarkup(buttons)        
+            ]]
+        reply_markup = InlineKeyboardMarkup(buttons)        
         await query.message.edit_text(        
             text="Select your required mode from below!",
             reply_markup=reply_markup,
