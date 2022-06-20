@@ -480,6 +480,19 @@ async def cb_handler(client: Client, query: CallbackQuery):
             file_id=file_id,
             caption=f_caption
             )
+    elif query.data == "removebg":
+        await query.message.edit_text(
+            "**Select required mode**ㅤㅤㅤㅤ",
+            reply_markup=InlineKeyboardMarkup(
+                [[
+                InlineKeyboardButton(text="ᴡɪᴛʜ ᴡʜɪᴛᴇ ʙɢ", callback_data="rmbgwhite"),
+                InlineKeyboardButton(text="ᴡɪᴛʜᴏᴜᴛ ʙɢ", callback_data="rmbgplain"),
+                ],[
+                InlineKeyboardButton(text="ꜱᴛɪᴄᴋᴇʀ", callback_data="rmbgsticker"),
+                ],[
+                InlineKeyboardButton('🚶🏼‍♂️ ʙᴀᴄᴋ', callback_data='photo')
+             ]]
+        ),)
     elif query.data == "stick":
         await query.message.edit(
             "**Select a Type**",
