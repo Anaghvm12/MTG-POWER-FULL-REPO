@@ -802,7 +802,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ],[
             InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='start'),
             InlineKeyboardButton('sᴛᴀᴛᴜs 🔰', callback_data='stats'),
-            InlineKeyboardButton('ʜᴏᴍᴇ 🏠', callback_data='home')
+            InlineKeyboardButton('𝖢ʟᴏsᴇ ⛔', callback_data='close_data')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -907,7 +907,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "image":
         buttons= [[
-            InlineKeyboardButton('🚶🏼‍♂️ ʙᴀᴄᴋ', callback_data='help')
+            InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='help')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
