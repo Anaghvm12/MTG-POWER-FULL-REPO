@@ -490,7 +490,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 ],[
                 InlineKeyboardButton(text="ꜱᴛɪᴄᴋᴇʀ", callback_data="rmbgsticker"),
                 ],[
-                InlineKeyboardButton('🚶🏼‍♂️ ʙᴀᴄᴋ', callback_data='photo')
+                InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='photo')
              ]]
         ),)
     elif query.data == "stick":
