@@ -804,7 +804,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('sᴛᴀᴛᴜs 🔰', callback_data='stats'),
             InlineKeyboardButton('ᴄʟᴏsᴇ ⛔', callback_data='close_data')
         ]]
-    reply1 = await query.message.reply_text(
+        reply1 = await query.message.reply_text(
             text="□□□"
         )
         await asyncio.sleep(0.5)
