@@ -184,9 +184,9 @@ async def help(client, message):
             InlineKeyboardButton('ɢɪᴛʜᴜʙ', callback_data='github'),
             InlineKeyboardButton("ɪᴍᴀɢᴇ", callback_data='image')
             ],[
-            InlineKeyboardButton('🚶‍♀️ ʙᴀᴄᴋ', callback_data='start'),
-            InlineKeyboardButton('ꜱᴛᴀᴛᴜꜱ 🎛️', callback_data='stats'),
-            InlineKeyboardButton(' ᴄʟᴏꜱᴇ', callback_data='close_data')
+            InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='start'),
+            InlineKeyboardButton('ꜱᴛᴀᴛᴜꜱ 🔰', callback_data='stats'),
+            InlineKeyboardButton('ᴄʟᴏꜱᴇ ⛔', callback_data='close_data')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
