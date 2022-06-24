@@ -54,14 +54,28 @@ async def showid(client, message):
             quote=True
         )
 
+@Client.on_message(filters.command("about"))
+async def aboutme(client, message):
+        buttons= [[
+            InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='start'),         
+            InlineKeyboardButton('ᴄʟᴏsᴇ ⛔', callback_data='close_data')          
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await message.reply_photo(
+            photo=random.choice(PICS),
+            caption=script.ABOUT_TXT.format(message.from_user.mention),
+            reply_markup=reply_markup,
+            parse_mode='html'
+        )
+
 @Client.on_message(filters.command(["info"]))
 async def who_is(client, message):
     # https://github.com/SpEcHiDe/PyroGramBot/blob/master/pyrobot/plugins/admemes/whois.py#L19
     status_message = await message.reply_text(
-        "`Fetching user info...`"
+        "`sᴇᴀʀᴄʜɪɴɢ ᴜsᴇʀ...`"
     )
     await status_message.edit(
-        "`Processing user info...`"
+        "`ᴀᴄᴄᴇssɪɴɢ ɪɴғᴏʀᴍᴀᴛɪᴏɴ...`"
     )
     from_user = None
     from_user_id, _ = extract_user(message)
@@ -73,15 +87,15 @@ async def who_is(client, message):
     if from_user is None:
         return await status_message.edit("no valid user_id / message specified")
     message_out_str = ""
-    message_out_str += f"<b>➲First Name:</b> {from_user.first_name}\n"
+    message_out_str += f"<b>• First Name:</b> {from_user.first_name}\n"
     last_name = from_user.last_name or "<b>None</b>"
-    message_out_str += f"<b>➲Last Name:</b> {last_name}\n"
-    message_out_str += f"<b>➲Telegram ID:</b> <code>{from_user.id}</code>\n"
+    message_out_str += f"<b>• Last Name:</b> {last_name}\n"
+    message_out_str += f"<b>• Telegram ID:</b> <code>{from_user.id}</code>\n"
     username = from_user.username or "<b>None</b>"
     dc_id = from_user.dc_id or "[User Doesnt Have A Valid DP]"
-    message_out_str += f"<b>➲Data Centre:</b> <code>{dc_id}</code>\n"
-    message_out_str += f"<b>➲User Name:</b> @{username}\n"
-    message_out_str += f"<b>➲User 𝖫𝗂𝗇𝗄:</b> <a href='tg://user?id={from_user.id}'><b>Click Here</b></a>\n"
+    message_out_str += f"<b>• Data Centre:</b> <code>{dc_id}</code>\n"
+    message_out_str += f"<b>• User Name:</b> @{username}\n"
+    message_out_str += f"<b>• User 𝖫𝗂𝗇𝗄:</b> <a href='tg://user?id={from_user.id}'><b>Click Here</b></a>\n"
     if message.chat.type in (("supergroup", "channel")):
         try:
             chat_member_p = await message.chat.get_member(from_user.id)
@@ -89,7 +103,7 @@ async def who_is(client, message):
                 chat_member_p.joined_date or time.time()
             ).strftime("%Y.%m.%d %H:%M:%S")
             message_out_str += (
-                "<b>➲Joined this Chat on:</b> <code>"
+                "<b>• Joined this Chat on:</b> <code>"
                 f"{joined_date}"
                 "</code>\n"
             )
@@ -101,7 +115,7 @@ async def who_is(client, message):
             message=chat_photo.big_file_id
         )
         buttons = [[
-            InlineKeyboardButton('🔐 Close', callback_data='close_data')
+            InlineKeyboardButton('𝖢𝗅𝗈𝗌𝖾 ⛔', callback_data='close_data')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
@@ -115,7 +129,7 @@ async def who_is(client, message):
         os.remove(local_user_photo)
     else:
         buttons = [[
-            InlineKeyboardButton('🔐 Close', callback_data='close_data')
+            InlineKeyboardButton('𝖢𝗅𝗈𝗌𝖾 ⛔', callback_data='close_data')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_text(
@@ -126,6 +140,62 @@ async def who_is(client, message):
             disable_notification=True
         )
     await status_message.delete()
+
+@Client.on_message(filters.command("help"))
+async def help(client, message):
+        buttons = [[
+            InlineKeyboardButton('ᴀᴅᴍɪɴ ', callback_data='admin'),
+            InlineKeyboardButton('ᴄᴏɴɴᴇᴄᴛ ', callback_data='coct'),
+            InlineKeyboardButton('ғɪʟᴛᴇʀ ', callback_data='manuelfilter')
+            ],[
+            InlineKeyboardButton('ɢᴛʀᴀɴs ', callback_data='gtrans'),
+            InlineKeyboardButton('ɪɴғᴏ ', callback_data='info'),
+            InlineKeyboardButton('ᴘᴀsᴛᴇ ', callback_data='pastes')
+            ],[
+            InlineKeyboardButton('ᴘᴜʀɢᴇ ', callback_data='purges'),
+            InlineKeyboardButton('ʀᴇsᴛʀɪᴄᴛ ', callback_data='restric'),
+            InlineKeyboardButton('sᴇᴀʀᴄʜ ', callback_data='search')
+            ],[
+            InlineKeyboardButton('ᴛɢʀᴀᴘʜ ', callback_data='tele'),
+            InlineKeyboardButton('ᴡʜᴏɪs ', callback_data='whois'),
+            InlineKeyboardButton('ғᴜɴ ', callback_data='fun')
+            ],[
+            InlineKeyboardButton('ᴀʟɪᴠᴇ ', callback_data='alive'),
+            InlineKeyboardButton('sᴏɴɢ ', callback_data='songs'),
+            InlineKeyboardButton('ᴊsᴏɴ ', callback_data='son')
+            ],[
+            InlineKeyboardButton('ᴘɪɴ ', callback_data='pin'),
+            InlineKeyboardButton('ᴄᴏʀᴏɴᴀ ', callback_data='corona'),
+            InlineKeyboardButton('sᴛɪᴄᴋᴇʀ ', callback_data='sticker')
+            ],[
+            InlineKeyboardButton('ᴛᴛꜱ', callback_data='ttss'),
+            InlineKeyboardButton('yᴛ-ᴛʜᴜᴍʙ', callback_data='ytthumb'),
+            InlineKeyboardButton('ᴀᴜᴅɪᴏ-ʙᴏᴏᴋ', callback_data='abook')
+            ],[
+            InlineKeyboardButton('ᴜʀʟ-sʜᴏʀᴛ', callback_data='urlshort'),
+            InlineKeyboardButton('ʀᴇᴩᴏʀᴛ', callback_data='report'),
+            InlineKeyboardButton("ᴠɪᴅᴇᴏ", callback_data='video')
+            ],[
+            InlineKeyboardButton('ᴋɪᴄᴋ', callback_data='zombies'),
+            InlineKeyboardButton('ᴍᴜᴛᴇ', callback_data='restric'),
+            InlineKeyboardButton('ꜰɪʟᴇ-ꜱᴛᴏʀᴇ', callback_data='newdata')
+            ],[
+            InlineKeyboardButton('ꜱᴏᴜʀᴄᴇ', callback_data='sorse'),
+            InlineKeyboardButton('ɢɪᴛʜᴜʙ', callback_data='github'),
+            InlineKeyboardButton("ɪᴍᴀɢᴇ", callback_data='image')
+            ],[
+            InlineKeyboardButton('🚶‍♀️ ʙᴀᴄᴋ', callback_data='start'),
+            InlineKeyboardButton('ꜱᴛᴀᴛᴜꜱ 🎛️', callback_data='stats'),
+            InlineKeyboardButton(' ᴄʟᴏꜱᴇ', callback_data='close_data')
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await message.reply_photo(
+            photo=random.choice(PICS),
+            caption=script.HELP_TXT.format(message.from_user.mention),
+            reply_markup=reply_markup,
+            parse_mode='html'
+        )
+
 
 @Client.on_message(filters.command(["imdb", 'search']))
 async def imdb_search(client, message):
