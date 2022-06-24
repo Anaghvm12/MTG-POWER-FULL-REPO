@@ -1,88 +1,157 @@
-
-
-from pyrogram import Client, filters
-
-import youtube_dl
-from youtube_search import YoutubeSearch
-import requests
+from __future__ import unicode_literals
 
 import os
+import requests
+import aiohttp
+import yt_dlp
+import asyncio
+import math
 import time
 
-## Extra Fns -------------------------------
+import wget
+import aiofiles
 
-# Convert hh:mm:ss to seconds
+from pyrogram import filters, Client
+from pyrogram.errors import FloodWait, MessageNotModified
+from pyrogram.types import Message
+from youtube_search import YoutubeSearch
+from youtubesearchpython import SearchVideos
+from yt_dlp import YoutubeDL
+import youtube_dl
+import requests
+
 def time_to_seconds(time):
     stringt = str(time)
     return sum(int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(':'))))
 
 
-## Commands --------------------------------
+@Client.on_message(filters.command('song') & ~filters.private & ~filters.channel)
+def song(client, message):
 
-@Client.on_message(filters.command("song") & ~filters.channel & ~filters.edited)
-def a(client, message):
+    user_id = message.from_user.id 
+    user_name = message.from_user.first_name 
+    rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
+
     query = ''
     for i in message.command[1:]:
         query += ' ' + str(i)
     print(query)
-    m = message.reply('`🎻𝖥𝗂𝗇𝖽𝗂𝗇𝗀 𝖸𝗈𝗎𝗋 𝖲𝗈𝗇𝗀🎶.....`')
+    m = message.reply("**🎻𝖥𝗂𝗇𝖽𝗂𝗇𝗀 𝖸𝗈𝗎𝗋 𝖲𝗈𝗇𝗀🎶.....**")
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
-        results = []
-        count = 0
-        while len(results) == 0 and count < 6:
-            if count>0:
-                time.sleep(1)
-            results = YoutubeSearch(query, max_results=1).to_dict()
-            count += 1
-        # results = YoutubeSearch(query, max_results=1).to_dict()
-        try:
-            link = f"https://youtube.com{results[0]['url_suffix']}"
-            # print(results)
-            title = results[0]["title"]
-            thumbnail = results[0]["thumbnails"][0]
-            duration = results[0]["duration"]
-            views = results[0]["views"]
+        results = YoutubeSearch(query, max_results=1).to_dict()
+        link = f"https://youtube.com{results[0]['url_suffix']}"
+        #print(results)
+        title = results[0]["title"][:40]       
+        thumbnail = results[0]["thumbnails"][0]
+        thumb_name = f'thumb{title}.jpg'
+        thumb = requests.get(thumbnail, allow_redirects=True)
+        open(thumb_name, 'wb').write(thumb.content)
 
-            ## UNCOMMENT THIS IF YOU WANT A LIMIT ON DURATION. CHANGE 1800 TO YOUR OWN PREFFERED DURATION AND EDIT THE MESSAGE (30 minutes cap) LIMIT IN SECONDS
-            # if time_to_seconds(duration) >= 1800:  # duration limit
-            #     m.edit("Exceeded 30mins cap")
-            #     return
 
-            performer = f"[ᴍᴀɢɴᴜs ᴛɢ ᴍᴜsɪᴄ]" 
-            thumb_name = f'thumb{message.message_id}.jpg'
-            thumb = requests.get(thumbnail, allow_redirects=True)
-            open(thumb_name, 'wb').write(thumb.content)
+        performer = f"[ᴍᴀɢɴᴜs ᴛɢ🇮🇳]" 
+        duration = results[0]["duration"]
+        url_suffix = results[0]["url_suffix"]
+        views = results[0]["views"]
 
-        except Exception as e:
-            print(e)
-            m.edit('**<b>𝖨 𝖺𝗆 𝖭𝗈𝗍 𝖥𝗈𝗎𝗇𝖽 𝖱𝖾𝗌𝗎𝗅𝗍 𝖨𝗇 𝖸𝗈𝗎𝗋 𝖱𝖾𝗊𝗎𝖾𝗌𝗍 ❤️.𝖯𝗅𝖾𝖺𝗌𝖾 𝖳𝗋𝗒 𝖠𝗇𝗈𝗍𝗁𝖾𝗋 𝖲𝗈𝗇𝗀 𝖮𝗋 𝖴𝗌𝖾 𝖢𝗈𝗋𝗋𝖾𝖼𝗍 𝖶𝗈𝗋𝖽💕!</b>**')
-            return
     except Exception as e:
         m.edit(
-            "**𝖤𝗇𝗍𝖾𝗋 𝗌𝖲𝗈𝗇𝗀 𝖭𝖺𝗆𝖾 𝖶𝗂𝗍𝗁 𝖢𝗈𝗆𝗆𝖺𝗇𝖽💕**❗\n𝖥𝗈𝗋 𝖤𝗑𝖺𝗆𝗉𝗅𝖾: `/song Alone Marshmellow`"
+            "**𝖥𝗈𝗎𝗇𝖽 𝖭𝗈𝗍𝗁𝗂𝗇𝗀 𝖯𝗅𝖾𝖺𝗌𝖾 𝖢𝗈𝗋𝗋𝖾𝖼𝗍 𝖳𝗁𝖾 𝖲𝗉𝖾𝗅𝗅𝗂𝗇𝗀 𝖮𝖿 𝖲𝖾𝖺𝗋𝖼𝗁 𝖠𝗇𝗒 𝖮𝗍𝗁𝖾𝗋 𝖲𝗈𝗇𝗀**"
         )
         print(str(e))
         return
-    m.edit("`𝖴𝗉𝗅𝗈𝖺𝖽𝗂𝗇𝗀...🎻`")
+    m.edit("**𝖣𝗈𝗐𝗇𝗅𝗈𝖺𝖽𝗂𝗇𝗀 𝖸𝗈𝗎𝗋 𝖲𝗈𝗇𝗀🎸🎶**")
     try:
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = f'🎹 <b>𝖳𝗂𝗍𝗅𝖾:</b> <a href="{link}">{title}</a>\n🎙️ <b>𝖣𝗎𝗋𝖺𝗍𝗂𝗈𝗇:</b> <code>{duration}</code>\n🎵 <b>𝖵𝗂𝖾𝗐𝗌:</b> <code>{views}</code>\n🎻 <b>𝖱𝖾𝗊𝗎𝖾𝗌𝗍𝖾𝖽 𝖡𝗒:</b> {message.from_user.mention()} \n🎶 <b>𝖴𝗉𝗅𝗈𝖺𝖽𝖾𝖽 𝖡𝗒: @Universal_MoviesZ</b> 👑'
+        rep = f'<b>🎸 𝖳𝗂𝗍𝗅𝖾 :</b> <a href="{link}">{title}</a>\n<b>🧭 𝖣𝗎𝗋𝖺𝗍𝗂𝗈𝗇 :</b> <code>{duration}</code>\n<b>🎧 𝖵𝗂𝖾𝗐𝗌 :</b> <code>{views}</code>\n <b>👤 𝖱𝖾𝗊𝗎𝖾𝗌𝗍𝖾𝖽 𝖡𝗒 ::</b> {message.from_user.mention()} \n <b>🎺 𝖴𝗉𝗅𝗈𝖺𝖽𝖾𝖽 𝖡𝗒 : @Universal_MoviesZ</b> 👑'
         secmul, dur, dur_arr = 1, 0, duration.split(':')
         for i in range(len(dur_arr)-1, -1, -1):
             dur += (int(dur_arr[i]) * secmul)
             secmul *= 60
         message.reply_audio(audio_file, caption=rep, parse_mode='HTML',quote=False, title=title, duration=dur, performer=performer, thumb=thumb_name)
         m.delete()
-        message.delete()
     except Exception as e:
-        m.edit('**𝖠𝗇 𝖤𝗋𝗋𝗈𝗋 𝖮𝖼𝖼𝗎𝗋𝖾𝖽 𝖯𝗅𝖾𝖺𝗌𝖾 𝖱𝖾𝗉𝗈𝗋𝗍 𝖳𝗁𝗂𝗌 𝗍𝗈 @MagnusTG !!**')
+        m.edit("**🚫 𝖤𝗋𝗋𝗈𝗋 🚫**")
         print(e)
+
     try:
         os.remove(audio_file)
         os.remove(thumb_name)
     except Exception as e:
         print(e)
+
+def get_text(message: Message) -> [None,str]:
+    text_to_return = message.text
+    if message.text is None:
+        return None
+    if " " not in text_to_return:
+        return None
+    try:
+        return message.text.split(None, 1)[1]
+    except IndexError:
+        return None
+
+
+@Client.on_message(filters.command(["video", "mp4"]))
+async def vsong(client, message: Message):
+    urlissed = get_text(message)
+
+    pablo = await client.send_message(
+        message.chat.id, f"**𝖥𝗂𝗇𝖽𝗂𝗇𝗀 𝖸𝗈𝗎𝗋 𝖵𝗂𝖽𝖾𝗈..** `{urlissed}`"
+    )
+    if not urlissed:
+        await pablo.edit("Invalid Command Syntax Please Check help Menu To Know More!")
+        return
+
+    search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
+    mi = search.result()
+    mio = mi["search_result"]
+    mo = mio[0]["link"]
+    thum = mio[0]["title"]
+    fridayz = mio[0]["id"]
+    mio[0]["channel"]
+    kekme = f"https://img.youtube.com/vi/{fridayz}/hqdefault.jpg"
+    await asyncio.sleep(0.6)
+    url = mo
+    sedlyf = wget.download(kekme)
+    opts = {
+        "format": "best",
+        "addmetadata": True,
+        "key": "FFmpegMetadata",
+        "prefer_ffmpeg": True,
+        "geo_bypass": True,
+        "nocheckcertificate": True,
+        "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
+        "outtmpl": "%(id)s.mp4",
+        "logtostderr": False,
+        "quiet": True,
+    }
+    try:
+        with YoutubeDL(opts) as ytdl:
+            ytdl_data = ytdl.extract_info(url, download=True)
+    except Exception as e:
+        await event.edit(event, f"**𝖣𝗈𝗐𝗇𝗅𝗈𝖺𝖽 𝖥ail𝖽 𝖯𝗅𝖾𝖺𝗌𝖾 𝖳𝗋𝗒 𝖠𝗀𝖺𝗂𝗇..** \n**Error :** `{str(e)}`")
+        return
+    c_time = time.time()
+    file_stark = f"{ytdl_data['id']}.mp4"
+    capy = f"""
+**𝚃𝙸𝚃𝙻𝙴 :** [{thum}]({mo})
+**𝚁𝙴𝚀𝚄𝙴𝚂𝚃𝙴𝙳 𝙱𝚈 :** {message.from_user.mention}
+"""
+    await client.send_video(
+        message.chat.id,
+        video=open(file_stark, "rb"),
+        duration=int(ytdl_data["duration"]),
+        file_name=str(ytdl_data["title"]),
+        thumb=sedlyf,
+        caption=capy,
+        supports_streaming=True,        
+        reply_to_message_id=message.message_id 
+    )
+    await pablo.delete()
+    for files in (sedlyf, file_stark):
+        if files and os.path.exists(files):
+            os.remove(files)
