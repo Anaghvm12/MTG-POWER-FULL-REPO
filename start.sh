@@ -1,12 +1,12 @@
 if [ -z $UPSTREAM_REPO ]
 then
   echo "Cloning main Repository"
-  git clone https://github.com/Aadhi000/Ajax.git /Ajax /EvaMaria
+  git clone https://github.com/Anaghvm12/MTG-POWER-FULL-REPO.git /Anaghvm12
 else
   echo "Cloning Custom Repo from $UPSTREAM_REPO "
-  git clone $UPSTREAM_REPO /Ajax
+  git clone $UPSTREAM_REPO /Anaghvm12
 fi
 cd /EvaMaria
 pip3 install -U -r requirements.txt
-echo " Starting Mtg....🔥"
+echo " Starting Alia....🔥"
 python3 bot.py
