@@ -716,10 +716,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer()
     elif query.data == "start":
         buttons = [[
-            InlineKeyboardButton('➕ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕', url='http://t.me/MTG_Movie_Bot?startgroup=true')             
-            ],[
-            InlineKeyboardButton('ʜᴇʟᴘ 📚', callback_data='help'),
-            InlineKeyboardButton('ᴀʙᴏᴜᴛ 😎', callback_data='about')
+            InlineKeyboardButton('➕ 𝖠𝖽𝖽 𝖬𝖾 𝖳𝗈 𝖸𝗈𝗎𝗋 𝖦𝗋𝗈𝗎𝗉 ➕', url='http://t.me/MTG_Movie_Bot?startgroup=true')
         ]]
         reply1 = await query.message.reply_text(
             text="□□□"
