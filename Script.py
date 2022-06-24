@@ -58,16 +58,15 @@ This module allows you to do that easily, by exposing some common actions, so ev
 • /inkick within_month long_time_ago - to kick users who are offline for more than 6-7 days.
 • /inkick long_time_ago - to kick members who are offline for more than a month and Deleted Accounts.
 • /dkick - to kick deleted accounts."""
-    SONG_TXT ="""<b>SONG MODULE</b>
-Song Download
-Song Download Module, For Those Who Love Music
+    SONG_TXT = """<b>𝖲𝗈𝗇𝗀 𝖣𝗈𝗐𝗇𝗅𝗈𝖺𝖽 𝖬𝗈𝖽𝗎𝗅𝖾</b>
 
-🎈 Command
+<b>𝖲𝗈𝗇𝗀 𝖣𝗈𝗐𝗇𝗅𝗈𝖺𝖽 𝖬𝗈𝖽𝗎𝗅𝖾, 𝖥𝗈𝗋 𝖳𝗁𝗈𝗌𝖾 𝖶𝗁𝗈 𝖫𝗈𝗏𝖾 𝖬𝗎𝗌𝗂𝖼. 𝖸𝗈𝗎 𝖢𝖺𝗇 𝖴𝗌𝖾 𝖳𝗁𝗂𝗌 𝖢𝗈𝗆𝗆𝖺𝗇𝖽 𝖥𝗈𝗋 𝖣𝗈𝗐𝗇𝗅𝗈𝖺𝖽 𝖬𝗎𝗌𝗂𝖼. 𝖠𝗇𝗒 𝖲𝗈𝗇𝗀 𝖶𝗂𝗍𝗁 𝖲𝗎𝗉𝖾𝗋 𝖥𝖺𝗌𝗍 𝖲𝗉𝖾𝖾𝖽.𝖶𝗈𝗋𝗄𝗌 𝖮𝗇𝗅𝗒 𝖮𝗇 𝖦𝗋𝗈𝗎𝗉..</b>
 
-- /song [Song Name] - To Download Music
+<b>𝖢𝗈𝗆𝗆𝖺𝗇𝖽𝗌</b>
 
-Usage
-- working pm and groups"""
+››  /song 𝖲𝗈𝗇𝗀 𝖭𝖺𝗆𝖾 
+
+𝖶𝗈𝗋𝗄𝗌 𝖮𝗇𝗅𝗒 𝖮𝗇 𝖦𝗋𝗈𝗎𝗉"""
     JSON_TXT ="""<b>JSON MODULE</b>
 JSON:
 Bot returns json for all replied messages with /json
