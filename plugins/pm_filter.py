@@ -1,4 +1,3 @@
-#Kanged From @TroJanZheX
 import asyncio
 import re
 import ast
@@ -6,20 +5,23 @@ import ast
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
 from Script import script
 import pyrogram
-from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, make_inactive
-from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE
+from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
+    make_inactive
+from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, \
+    SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid
-from utils import get_size, is_subscribed, get_poster, search_gagala, temp
+from utils import get_size, is_subscribed, get_poster, search_gagala, temp, get_settings, save_group_settings
 from database.users_chats_db import db
 from database.ia_filterdb import Media, get_file_details, get_search_results
-from database.filters_mdb import(
-   del_all,
-   find_filter,
-   get_filters,
+from database.filters_mdb import (
+    del_all,
+    find_filter,
+    get_filters,
 )
 import logging
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
 
@@ -72,8 +74,31 @@ from image.edit_5 import (  # pylint:disable=import-error
 
 BUTTONS = {}
 SPELL_CHECK = {}
+FILTER_MODE = {}
 
-@Client.on_message(filters.group & filters.text & ~filters.edited & filters.incoming)
+@Client.on_message(filters.command('autofilter'))
+async def fil_mod(client, message): 
+      mode_on = ["yes", "on", "true"]
+      mode_of = ["no", "off", "false"]
+
+      try: 
+         args = message.text.split(None, 1)[1].lower() 
+      except: 
+         return await message.reply("**𝖨𝗇 𝖢𝗈𝗆𝗉𝗅𝖾𝗍𝖾 𝖢𝗈𝗆𝗆𝖺𝗇𝗍...**")
+      
+      m = await message.reply("**𝖲𝖾𝗍𝗍𝗂𝗇𝗀𝗌...**")
+
+      if args in mode_on:
+          FILTER_MODE[str(message.chat.id)] = "True" 
+          await m.edit("**𝖠𝗎𝗍𝗈 𝖥𝗂𝗅𝗍𝖾𝗋 𝖠𝗇𝖺𝖻𝗅𝖾𝖽**")
+      
+      elif args in mode_of:
+          FILTER_MODE[str(message.chat.id)] = "False"
+          await m.edit("**𝖠𝗎𝗍𝗈 𝖥𝗂𝗅𝗍𝖾𝗋 𝖣𝗂𝗌𝖺𝖻𝗅𝖾𝖽**")
+      else:
+          await m.edit("ᴜsᴇ :- /autofilter on 𝙾𝚁 /autofilter off")
+
+@Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client,message):
     group_id = message.chat.id
     name = message.text
@@ -112,11 +137,15 @@ async def give_filter(client,message):
                             reply_markup=InlineKeyboardMarkup(button)
                         )
                 except Exception as e:
-                    logger.exception(e)
+                    print(e)
                 break 
 
     else:
-        await auto_filter(client, message)   
+        if FILTER_MODE.get(str(message.chat.id)) == "False":
+            return
+        else:
+            await auto_filter(client, message)   
+
 
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
@@ -163,6 +192,14 @@ async def next_page(bot, query):
             ]
             for file in files
         ]
+   
+    btn.insert(0,
+        [ 
+            InlineKeyboardButton(f'sᴇʀɪᴇs', 'pk'),
+            InlineKeyboardButton(f'ᴍᴏᴠɪᴇs', 'tips'),
+            InlineKeyboardButton(f'ɪɴғᴏ', 'dwl')
+        ]
+    )
 
     if 0 < offset <= 10:
         off_set = 0
