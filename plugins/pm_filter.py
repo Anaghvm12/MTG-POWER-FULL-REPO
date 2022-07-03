@@ -255,17 +255,12 @@ async def advantage_spoll_choker(bot, query):
 async def cb_handler(client: Client, query: CallbackQuery):
     if query.data == "close_data":
         await query.message.delete()
-        try:
-            await query.message.reply_to_message.delete()
-        except:
-            pass
-
     elif query.data == "delallconfirm":
         userid = query.from_user.id
         chat_type = query.message.chat.type
 
         if chat_type == "private":
-            grpid  = await active_connection(str(userid))
+            grpid = await active_connection(str(userid))
             if grpid is not None:
                 grp_id = grpid
                 try:
@@ -273,14 +268,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     title = chat.title
                 except:
                     await query.message.edit_text("Make sure I'm present in your group!!", quote=True)
-                    return
+                    return await query.answer('𝑝𝑙𝑒𝑎𝑠𝑒 𝑠ℎ𝑎𝑟𝑒 𝑎𝑛𝑑 𝑠𝑢𝑝𝑝𝑜𝑟𝑡 𝑢𝑠')
             else:
                 await query.message.edit_text(
                     "I'm not connected to any groups!\nCheck /connections or connect to any groups",
                     quote=True
                 )
                 return
-
         elif chat_type in ["group", "supergroup"]:
             grp_id = query.message.chat.id
             title = query.message.chat.title
@@ -289,11 +283,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
             return
 
         st = await client.get_chat_member(grp_id, userid)
-        if (st.status == "creator") or (str(userid) in ADMINS):    
+        if (st.status == "creator") or (str(userid) in ADMINS):
             await del_all(query.message, grp_id, title)
         else:
-            await query.answer(f"🤒 Hey, {query.from_user.first_name}! You need to be Group Owner or an Auth User to do that! 🤒",show_alert=True)
-
+            await query.answer(f"🤒 Hey, {query.from_user.first_name}! You need to be Group Owner or an Auth User to do that! 🤒", show_alert=True)
     elif query.data == "delallcancel":
         userid = query.from_user.id
         chat_type = query.message.chat.type
