@@ -197,7 +197,7 @@ async def next_page(bot, query):
         [ 
             InlineKeyboardButton(f'sᴇʀɪᴇs', 'pk'),
             InlineKeyboardButton(f'ᴍᴏᴠɪᴇs', 'tips'),
-            InlineKeyboardButton(f'ɪɴғᴏ', 'dwl')
+            InlineKeyboardButton(f'ɪɴғᴏ', 'mtg')
         ]
     )
 
@@ -1353,7 +1353,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.message.delete()
     elif query.data == 'tips':
         await query.answer("ᴍᴏᴠɪᴇ ʀᴇǫᴜᴇꜱᴛɪɴɢ ꜰᴏʀᴍᴀᴛ\n\nɢᴏ ᴛᴏ ɢᴏᴏɢʟᴇ »» ᴛʏᴩᴇ ᴍᴏᴠɪᴇ ɴᴀᴍᴇ »» ᴄᴏᴩʏ ᴄᴏʀʀᴇᴄᴛ ɴᴀᴍᴇ »» ᴘᴀꜱᴛᴇ ᴛʜɪꜱ ɢʀᴏᴜᴩ\n\nᴇxᴀᴍᴩʟᴇ : ᴍᴀʟɪᴋ ᴏʀ ᴍᴀʟɪᴋ 2021\n\nメ ᴅᴏɴᴛ ᴜꜱᴇ ➜ !:(!;/)-_.)\n\n© ᴅᴡʟ ᴀᴜᴛᴏ ꜰɪʟᴛᴇʀ ʙᴏᴛ", True)
-    elif query.data == 'dwl':
+    elif query.data == 'mtg':
         await query.answer("⚠️ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ ⚠️\n.......................................\n\nᴀꜰᴛᴇʀ 5 ᴍɪɴᴜᴛᴇꜱ ᴛʜɪꜱ ᴍᴀꜱꜱᴀɢᴇ ᴡɪʟʟ ʙᴇ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴅᴇʟᴇᴛᴇᴅ.\n\nɪғ ʏᴏᴜ ᴅᴏ ɴᴏᴛ sᴇᴇ ᴛʜᴇ ʀᴇǫᴜᴇsᴛᴇᴅ ᴍᴏᴠɪᴇ/sᴇʀɪᴇs ғɪʟᴇ, ʟᴏᴏᴋ ᴀᴛ ᴛʜᴇ ɴᴇxᴛ ᴘᴀɢᴇ 🤗", True)
     elif query.data == 'pk':
         await query.answer("ꜱᴇʀɪᴇꜱ ʀᴇǫᴜᴇꜱᴛ ꜰᴏʀᴍᴀᴛ\n\nɢᴏ ᴛᴏ ɢᴏᴏɢʟᴇ »» ᴛʏᴘᴇ ᴍᴏᴠɪᴇ ɴᴀᴍᴇ »» ᴄᴏᴘʏ ᴄᴏʀʀᴇᴄᴛ ɴᴀᴍᴇ »» ᴘᴀꜱᴛᴇ ᴛʜɪꜱ ɢʀᴏᴜᴩ\n\nᴇxᴀᴍᴩʟᴇ : Dark or Dark S01E1\n\nメ ᴅᴏɴᴛ ᴜꜱᴇ ➜ !:(!;/)-_.)\n\n©️ ᴅᴡʟ ᴀᴜᴛᴏ ғɪʟᴛᴇʀ ʙᴏᴛ", True)
@@ -1409,7 +1409,7 @@ async def auto_filter(client, msg, spoll=False):
         [
             InlineKeyboardButton(f'sᴇʀɪᴇs', 'pk'),
             InlineKeyboardButton(f'ᴍᴏᴠɪᴇs', 'tips'),
-            InlineKeyboardButton(f'ɪɴғᴏ', 'dwl')
+            InlineKeyboardButton(f'ɪɴғᴏ', 'mtg')
         ]
     )
 
