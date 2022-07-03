@@ -1264,7 +1264,70 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode='html'
       )
-    
+  elif query.data.startswith("setgs"):
+        ident, set_type, status, grp_id = query.data.split("#")
+        grpid = await active_connection(str(query.from_user.id))
+
+        if str(grp_id) != str(grpid):
+            await query.message.edit("Your Active Connection Has Been Changed. Go To /settings.")
+            return 
+
+        if status == "True":
+            await save_group_settings(grpid, set_type, False)
+        else:
+            await save_group_settings(grpid, set_type, True)
+
+        settings = await get_settings(grpid)
+
+        if settings is not None:
+            buttons = [
+                [
+                    InlineKeyboardButton('ғɪʟᴛᴇʀ ʙᴜᴛᴛᴏɴ',
+                                         callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('sɪɴɢʟᴇ' if settings["button"] else '𝐃𝐎𝐔𝐁𝐋𝐄',
+                                         callback_data=f'setgs#button#{settings["button"]}#{str(grp_id)}')
+                ],
+                [
+                    InlineKeyboardButton('ʙᴏᴛ ᴘᴍ', callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ ʏᴇs' if settings["botpm"] else '🗑️ 𝐍𝐎',
+                                         callback_data=f'setgs#botpm#{settings["botpm"]}#{str(grp_id)}')
+                ],
+                [
+                    InlineKeyboardButton('ғɪʟᴇ sᴇᴄᴜʀᴇ',
+                                         callback_data=f'setgs#file_secure#{settings["file_secure"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ ʏᴇs' if settings["file_secure"] else '🗑️ 𝐍𝐎',
+                                         callback_data=f'setgs#file_secure#{settings["file_secure"]}#{str(grp_id)}')
+                ],
+                [
+                    InlineKeyboardButton('ɪᴍᴅʙ', callback_data=f'setgs#imdb#{settings["imdb"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ ʏᴇs' if settings["imdb"] else '🗑️ 𝐍𝐎',
+                                         callback_data=f'setgs#imdb#{settings["imdb"]}#{str(grp_id)}')
+                ],
+                [
+                    InlineKeyboardButton('sᴘᴇʟʟ ᴄʜᴇᴄᴋ',
+                                         callback_data=f'setgs#spell_check#{settings["spell_check"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ ʏᴇs' if settings["spell_check"] else '🗑️ 𝐍𝐎',
+                                         callback_data=f'setgs#spell_check#{settings["spell_check"]}#{str(grp_id)}')
+                ],
+                [
+                    InlineKeyboardButton('ᴡᴇʟᴄᴏᴍᴇ', callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ ʏᴇs' if settings["welcome"] else '🗑️ 𝐍𝐎',
+                                         callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}')
+                ]
+            ]
+            reply_markup = InlineKeyboardMarkup(buttons)
+            await query.message.edit_reply_markup(reply_markup)
+    elif query.data == "close":
+        await query.message.delete()
+    elif query.data == 'tips':
+        await query.answer("ᴍᴏᴠɪᴇ ʀᴇǫᴜᴇꜱᴛɪɴɢ ꜰᴏʀᴍᴀᴛ\n\nɢᴏ ᴛᴏ ɢᴏᴏɢʟᴇ »» ᴛʏᴩᴇ ᴍᴏᴠɪᴇ ɴᴀᴍᴇ »» ᴄᴏᴩʏ ᴄᴏʀʀᴇᴄᴛ ɴᴀᴍᴇ »» ᴘᴀꜱᴛᴇ ᴛʜɪꜱ ɢʀᴏᴜᴩ\n\nᴇxᴀᴍᴩʟᴇ : ᴍᴀʟɪᴋ ᴏʀ ᴍᴀʟɪᴋ 2021\n\nメ ᴅᴏɴᴛ ᴜꜱᴇ ➜ !:(!;/)-_.)\n\n© ᴅᴡʟ ᴀᴜᴛᴏ ꜰɪʟᴛᴇʀ ʙᴏᴛ", True)
+    elif query.data == 'dwl':
+        await query.answer("⚠️ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ ⚠️\n.......................................\n\nᴀꜰᴛᴇʀ 5 ᴍɪɴᴜᴛᴇꜱ ᴛʜɪꜱ ᴍᴀꜱꜱᴀɢᴇ ᴡɪʟʟ ʙᴇ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴅᴇʟᴇᴛᴇᴅ.\n\nɪғ ʏᴏᴜ ᴅᴏ ɴᴏᴛ sᴇᴇ ᴛʜᴇ ʀᴇǫᴜᴇsᴛᴇᴅ ᴍᴏᴠɪᴇ/sᴇʀɪᴇs ғɪʟᴇ, ʟᴏᴏᴋ ᴀᴛ ᴛʜᴇ ɴᴇxᴛ ᴘᴀɢᴇ 🤗", True)
+    elif query.data == 'pk':
+        await query.answer("ꜱᴇʀɪᴇꜱ ʀᴇǫᴜᴇꜱᴛ ꜰᴏʀᴍᴀᴛ\n\nɢᴏ ᴛᴏ ɢᴏᴏɢʟᴇ »» ᴛʏᴘᴇ ᴍᴏᴠɪᴇ ɴᴀᴍᴇ »» ᴄᴏᴘʏ ᴄᴏʀʀᴇᴄᴛ ɴᴀᴍᴇ »» ᴘᴀꜱᴛᴇ ᴛʜɪꜱ ɢʀᴏᴜᴩ\n\nᴇxᴀᴍᴩʟᴇ : Dark or Dark S01E1\n\nメ ᴅᴏɴᴛ ᴜꜱᴇ ➜ !:(!;/)-_.)\n\n©️ ᴅᴡʟ ᴀᴜᴛᴏ ғɪʟᴛᴇʀ ʙᴏᴛ", True)
+    elif query.data == 'sorse':
+        await query.answer("ᴛʜɪs ʙᴏᴛ ɴᴏᴛ ᴀ ᴏᴘᴇɴ ꜱᴏᴜʀᴄᴇ ᴩʀᴏᴊᴇᴄᴛ 🤧", True)  
+
 
 async def auto_filter(client, msg, spoll=False):
     if not spoll:
@@ -1282,9 +1345,11 @@ async def auto_filter(client, msg, spoll=False):
         else:
             return
     else:
-        message = msg.message.reply_to_message # msg will be callback query
+        settings = await get_settings(msg.message.chat.id)
+        message = msg.message.reply_to_message  # msg will be callback query
         search, files, offset, total_results = spoll
-    if SINGLE_BUTTON:
+    pre = 'filep' if settings['file_secure'] else 'file'
+    if settings["button"]:
         btn = [
             [
                 InlineKeyboardButton(
@@ -1308,21 +1373,34 @@ async def auto_filter(client, msg, spoll=False):
             for file in files
         ]
 
+    btn.insert(0,
+        [
+            InlineKeyboardButton(f'sᴇʀɪᴇs', 'pk'),
+            InlineKeyboardButton(f'ᴍᴏᴠɪᴇs', 'tips'),
+            InlineKeyboardButton(f'ɪɴғᴏ', 'dwl')
+        ]
+    )
+
     if offset != "":
         key = f"{message.chat.id}-{message.message_id}"
         BUTTONS[key] = search
         req = message.from_user.id if message.from_user else 0
         btn.append(
-            [InlineKeyboardButton(text=f"🗓 1/{round(int(total_results)/10)}",callback_data="pages"), InlineKeyboardButton(text="𝖭ᴇxᴛ ➡️",callback_data=f"next_{req}_{key}_{offset}")]
+            [InlineKeyboardButton(text="ᴘᴀɢᴇs", callback_data="pages"),
+             InlineKeyboardButton(text=f"1/{round(int(total_results) / 10)}", callback_data="pages"),
+             InlineKeyboardButton(text="ɴᴇxᴛ", callback_data=f"next_{req}_{key}_{offset}")]
         )
     else:
         btn.append(
-            [InlineKeyboardButton(text="📋 1/1 📋",callback_data="pages")]
+            [InlineKeyboardButton(text="ꜱᴇʟᴇᴄᴛ ꜰɪʟᴇ ꜰʀᴏᴍ ᴀʙᴏᴠᴇ ʟɪɴᴋꜱ", callback_data="pages")]
         )
-    imdb = await get_poster(search, file=(files[0]).file_name) if IMDB else None
+    imdb = await get_poster(search, file=(files[0]).file_name) if settings["imdb"] else None
+    TEMPLATE = settings['template']
     if imdb:
-        cap = IMDB_TEMPLATE.format(
+        cap = TEMPLATE.format(
             query = search,
+            requested = message.from_user.mention,
+            group = message.chat.title,
             title = imdb['title'],
             votes = imdb['votes'],
             aka = imdb["aka"],
@@ -1369,19 +1447,18 @@ async def auto_filter(client, msg, spoll=False):
             await message.delete()
         except Exception as e:
             logger.exception(e)
-            fek = await message.reply_photo(photo="https://telegra.ph/file/82b5bbbab6d5e5593b6b2.jpg", caption=cap, reply_markup=InlineKeyboardMarkup(btn))
+            fek = await message.reply_photo(photo="https://telegra.ph/file/3cccb8384fd65914b5193.jpg", caption=cap, reply_markup=InlineKeyboardMarkup(btn))
             await asyncio.sleep(300)
             await fek.delete()
             await msg.delete()
     else:
-        fuk = await message.reply_photo(photo="https://telegra.ph/file/8b42f6caf6ef5fd76766f.jpg", caption=cap, reply_markup=InlineKeyboardMarkup(btn))
+        fuk = await message.reply_photo(photo="https://telegra.ph/file/3cccb8384fd65914b5193.jpg", caption=cap, reply_markup=InlineKeyboardMarkup(btn))
         await asyncio.sleep(300)
         await fuk.delete()
         await msg.delete()
     if spoll:
-        await msg.message.delete()
-        
-        
+        await msg.message.delete()      
+
 
 async def advantage_spell_chok(msg):
     query = re.sub(r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)", "", msg.text, flags=re.IGNORECASE) # plis contribute some common words 
@@ -1439,3 +1516,52 @@ async def advantage_spell_chok(msg):
     m = await msg.reply(f"Hey, {msg.from_user.mention}!\nI couldn't find anything related to that\nDid you mean any one of these?", reply_markup=InlineKeyboardMarkup(btn))
     await asyncio.sleep(20)
     await m.delete()
+
+
+async def manual_filters(client, message, text=False):
+    group_id = message.chat.id
+    name = text or message.text
+    reply_id = message.reply_to_message.message_id if message.reply_to_message else message.message_id
+    keywords = await get_filters(group_id)
+    for keyword in reversed(sorted(keywords, key=len)):
+        pattern = r"( |^|[^\w])" + re.escape(keyword) + r"( |$|[^\w])"
+        if re.search(pattern, name, flags=re.IGNORECASE):
+            reply_text, btn, alert, fileid = await find_filter(group_id, keyword)
+
+            if reply_text:
+                reply_text = reply_text.replace("\\n", "\n").replace("\\t", "\t")
+
+            if btn is not None:
+                try:
+                    if fileid == "None":
+                        if btn == "[]":
+                            await client.send_message(group_id, reply_text, disable_web_page_preview=True)
+                        else:
+                            button = eval(btn)
+                            await client.send_message(
+                                group_id,
+                                reply_text,
+                                disable_web_page_preview=True,
+                                reply_markup=InlineKeyboardMarkup(button),
+                                reply_to_message_id=reply_id
+                            )
+                    elif btn == "[]":
+                        await client.send_cached_media(
+                            group_id,
+                            fileid,
+                            caption=reply_text or "",
+                            reply_to_message_id=reply_id
+                        )
+                    else:
+                        button = eval(btn)
+                        await message.reply_cached_media(
+                            fileid,
+                            caption=reply_text or "",
+                            reply_markup=InlineKeyboardMarkup(button),
+                            reply_to_message_id=reply_id
+                        )
+                except Exception as e:
+                    logger.exception(e)
+                break
+    else:
+        return False
