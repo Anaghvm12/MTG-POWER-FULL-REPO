@@ -17,9 +17,9 @@ async def addconnection(client,message):
             cmd, group_id = message.text.split(" ", 1)
         except:
             await message.reply_text(
-                "<b>Enter in correct format!</b>\n\n"
-                "<code>/connect groupid</code>\n\n"
-                "<i>Get your Group id by adding this bot to your group and use  <code>/id</code></i>",
+                "<b>ᴇɴᴛᴇʀ ɪɴ ᴄᴏʀʀᴇᴄᴛ ғᴏʀᴍᴀᴛ</b>\n"
+                "**/connect ɢʀᴏᴜᴘ ɪᴅ\n**"
+                "**Get your Group id by adding this bot to your group and use  <code>/id</code>**",
                 quote=True
             )
             return
@@ -53,7 +53,7 @@ async def addconnection(client,message):
             addcon = await add_connection(str(group_id), str(userid))
             if addcon:
                 await message.reply_text(
-                    f"Sucessfully connected to **{title}**\nNow manage your group from my pm !",
+                    f"sᴜᴄᴄᴇssғᴜʟʟʏ ᴄᴏɴɴᴇᴄᴛ ᴛᴏ **{title}**\nɴᴏᴡ ʏᴏᴜ ᴄᴀɴ ᴍᴀɴᴀɢᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘ ғʀᴏᴍ ʜᴇʀᴇ 𝚈𝙾𝚄 𝙲𝙰𝙽 𝙼𝙰𝙽𝙰𝙶𝙴 𝚈𝙾𝚄𝚁 ɢʀᴏᴜᴘ ғʀᴏᴍ ʜᴇʀᴇ",
                     quote=True,
                     parse_mode="md"
                 )
@@ -122,7 +122,7 @@ async def connections(client,message):
             ttl = await client.get_chat(int(groupid))
             title = ttl.title
             active = await if_active(str(userid), str(groupid))
-            act = " - ACTIVE" if active else ""
+            act = "• ᴀᴄᴛɪᴠᴇ" if active else ""
             buttons.append(
                 [
                     InlineKeyboardButton(
@@ -134,7 +134,7 @@ async def connections(client,message):
             pass
     if buttons:
         await message.reply_text(
-            "Your connected group details ;\n\n",
+            "ᴄᴏɴɴᴇᴄᴛᴇᴅ ɢʀᴏᴜᴘs :-\n\n",
             reply_markup=InlineKeyboardMarkup(buttons),
             quote=True
         )
