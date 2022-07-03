@@ -327,24 +327,23 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
         keyboard = InlineKeyboardMarkup([
             [InlineKeyboardButton(f"{stat}", callback_data=f"{cb}:{group_id}"),
-                InlineKeyboardButton("DELETE", callback_data=f"deletecb:{group_id}")],
-            [InlineKeyboardButton("BACK", callback_data="backcb")]
+             InlineKeyboardButton("ᴅᴇʟᴇᴛᴇ 🗑️", callback_data=f"deletecb:{group_id}")],
+            [InlineKeyboardButton("⬅️ ʙᴀᴄᴋ", callback_data="backcb")]
         ])
 
         await query.message.edit_text(
-            f"Group Name : **{title}**\nGroup ID : `{group_id}`",
+            f"ɢʀᴏᴜᴘ ɴᴀᴍᴇ :- **{title}**\nɢʀᴏᴜᴘ ɪᴅ :- `{group_id}`",
             reply_markup=keyboard,
             parse_mode="md"
         )
-        return
-
+        return await query.answer('𝑝𝑙𝑒𝑎𝑠𝑒 𝑠ℎ𝑎𝑟𝑒 𝑎𝑛𝑑 𝑠𝑢𝑝𝑝𝑜𝑟𝑡 𝑢𝑠')
     elif "connectcb" in query.data:
         await query.answer()
 
         group_id = query.data.split(":")[1]
 
         hr = await client.get_chat(int(group_id))
-
+        
         title = hr.title
 
         user_id = query.from_user.id
@@ -353,13 +352,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
 
         if mkact:
             await query.message.edit_text(
-                f"Connected to **{title}**",
+                f"𝙲𝙾𝙽𝙽𝙴𝙲𝚃𝙴𝙳 𝚃𝙾 **{title}**",
                 parse_mode="md"
             )
         else:
-            await query.message.edit_text('Some error occured!!', parse_mode="md")
-        return
-   
+            await query.message.edit_text('Some error occurred!!', parse_mode="md")
+        return await query.answer('𝑝𝑙𝑒𝑎𝑠𝑒 𝑠ℎ𝑎𝑟𝑒 𝑎𝑛𝑑 𝑠𝑢𝑝𝑝𝑜𝑟𝑡 𝑢𝑠')
     elif "disconnect" in query.data:
         await query.answer()
 
@@ -379,7 +377,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             )
         else:
             await query.message.edit_text(
-                f"Some error occured!!",
+                f"Some error occurred!!",
                 parse_mode="md"
             )
         return
@@ -397,10 +395,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
             )
         else:
             await query.message.edit_text(
-                f"Some error occured!!",
+                f"Some error occurred!!",
                 parse_mode="md"
             )
-        return
+        return await query.answer('𝑝𝑙𝑒𝑎𝑠𝑒 𝑠ℎ𝑎𝑟𝑒 𝑎𝑛𝑑 𝑠𝑢𝑝𝑝𝑜𝑟𝑡 𝑢𝑠')
     elif query.data == "backcb":
         await query.answer()
 
@@ -411,7 +409,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.edit_text(
                 "There are no active connections!! Connect to some groups first.",
             )
-            return
+            return await query.answer('𝑝𝑙𝑒𝑎𝑠𝑒 𝑠ℎ𝑎𝑟𝑒 𝑎𝑛𝑑 𝑠𝑢𝑝𝑝𝑜𝑟𝑡 𝑢𝑠')
         buttons = []
         for groupid in groupids:
             try:
@@ -433,7 +431,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 "Your connected group details ;\n\n",
                 reply_markup=InlineKeyboardMarkup(buttons)
             )
-
     elif "alertmessage" in query.data:
         grp_id = query.message.chat.id
         i = query.data.split(":")[1]
