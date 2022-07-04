@@ -1,14 +1,14 @@
 import pymongo
 
-from info import DATABASE_URI, DATABASE_NAME
+from info import database_uri, database_name
 
 import logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.ERROR)
+logger = logging.getlogger(__name__)
+logger.setlevel(logging.error)
 
-myclient = pymongo.MongoClient(DATABASE_URI)
-mydb = myclient[DATABASE_NAME]
-mycol = mydb['CONNECTION']   
+myclient = pymongo.mongoclient(database_uri)
+mydb = myclient[database_name]
+mycol = mydb['connection']   
 
 
 async def add_connection(group_id, user_id):
@@ -16,10 +16,10 @@ async def add_connection(group_id, user_id):
         { "_id": user_id },
         { "_id": 0, "active_group": 0 }
     )
-    if query is not None:
+    if query is not none:
         group_ids = [x["group_id"] for x in query["group_details"]]
         if group_id in group_ids:
-            return False
+            return false
 
     group_details = {
         "group_id" : group_id
@@ -34,9 +34,9 @@ async def add_connection(group_id, user_id):
     if mycol.count_documents( {"_id": user_id} ) == 0:
         try:
             mycol.insert_one(data)
-            return True
+            return true
         except:
-            logger.exception('Some error occured!', exc_info=True)
+            logger.exception('some error occurred!', exc_info=true)
 
     else:
         try:
@@ -47,9 +47,9 @@ async def add_connection(group_id, user_id):
                     "$set": {"active_group" : group_id}
                 }
             )
-            return True
+            return true
         except:
-            logger.exception('Some error occured!', exc_info=True)
+            logger.exception('some error occurred!', exc_info=true)
 
         
 async def active_connection(user_id):
@@ -59,13 +59,10 @@ async def active_connection(user_id):
         { "_id": 0, "group_details": 0 }
     )
     if not query:
-        return None
+        return none
 
     group_id = query['active_group']
-    if group_id != None:
-        return int(group_id)
-    else:
-        return None
+    return int(group_id) if group_id != none else none
 
 
 async def all_connections(user_id):
@@ -73,10 +70,10 @@ async def all_connections(user_id):
         { "_id": user_id },
         { "_id": 0, "active_group": 0 }
     )
-    if query is not None:
+    if query is not none:
         return [x["group_id"] for x in query["group_details"]]
     else:
-        return None
+        return none
 
 
 async def if_active(user_id, group_id):
@@ -84,7 +81,7 @@ async def if_active(user_id, group_id):
         { "_id": user_id },
         { "_id": 0, "group_details": 0 }
     )
-    return query is not None and query['active_group'] == group_id
+    return query is not none and query['active_group'] == group_id
 
 
 async def make_active(user_id, group_id):
@@ -98,7 +95,7 @@ async def make_active(user_id, group_id):
 async def make_inactive(user_id):
     update = mycol.update_one(
         {'_id': user_id},
-        {"$set": {"active_group" : None}}
+        {"$set": {"active_group" : none}}
     )
     return update.modified_count != 0
 
@@ -111,7 +108,7 @@ async def delete_connection(user_id, group_id):
             {"$pull" : { "group_details" : {"group_id":group_id} } }
         )
         if update.modified_count == 0:
-            return False
+            return false
         query = mycol.find_one(
             { "_id": user_id },
             { "_id": 0 }
@@ -127,10 +124,10 @@ async def delete_connection(user_id, group_id):
         else:
             mycol.update_one(
                 {'_id': user_id},
-                {"$set": {"active_group" : None}}
+                {"$set": {"active_group" : none}}
             )
-        return True
-    except Exception as e:
-        logger.exception(f'Some error occured! {e}', exc_info=True)
-        return False
+        return true
+    except exception as e:
+        logger.exception(f'some error occurred! {e}', exc_info=true)
+        return false
 
