@@ -55,17 +55,27 @@ auth_channel = environ.get('AUTH_CHANNEL')
 auth_grp = environ.get('AUTH_GROUP')
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
+USE_AS_BOT = environ.get("USE_AS_BOT", True)
+
+# maximum message length in Telegram
+MAX_MESSAGE_LENGTH = 4096
+
+# This is required for the plugins involving the file system.
+TMP_DOWNLOAD_DIRECTORY = environ.get("TMP_DOWNLOAD_DIRECTORY", "./DOWNLOADS/")
+
+# the maximum number of 'selectable' messages in Telegram
+TG_MAX_SELECT_LEN = environ.get("TG_MAX_SELECT_LEN", "100")
+
+# Command
+COMMAND_HAND_LER = environ.get("COMMAND_HAND_LER", "/")
 
 # MongoDB information
 DATABASE_URI = environ.get('DATABASE_URI', "")
 DATABASE_NAME = environ.get('DATABASE_NAME', "Rajappan")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
 
-# This is required for the plugins involving the file system.
-TMP_DOWNLOAD_DIRECTORY = environ.get("TMP_DOWNLOAD_DIRECTORY", "./DOWNLOADS/")
-
-# Command
-COMMAND_HAND_LER = environ.get("COMMAND_HAND_LER", "/")
+#Downloader
+DOWNLOAD_LOCATION = environ.get("DOWNLOAD_LOCATION", "./DOWNLOADS/AudioBoT/")
 
 # Others
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', 0))
