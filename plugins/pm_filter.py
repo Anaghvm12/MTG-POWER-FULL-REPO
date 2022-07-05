@@ -170,25 +170,28 @@ async def next_page(bot, query):
 
     if not files:
         return
-    if SINGLE_BUTTON:
+    settings = await get_settings(query.message.chat.id)
+    pre = 'Chat' if settings['redirect_to'] == 'Chat' else 'files'
+
+    if settings['button']:
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"📂[{get_size(file.file_size)}] {file.file_name}", callback_data=f'files#{file.file_id}'
-                ),
-            ]
+                    text=f"📂 [{get_size(file.file_size)}] {file.file_name}", callback_data=f'{pre}#{file.file_id}#{query.from_user.id}'
+                )
+            ] 
             for file in files
         ]
     else:
-        btn = [
+        btn = [        
             [
                 InlineKeyboardButton(
-                    text=f"{file.file_name}", callback_data=f'files#{file.file_id}'
+                    text=f"{file.file_name}", callback_data=f'{pre}#{file.file_id}#{query.from_user.id}'
                 ),
                 InlineKeyboardButton(
-                    text=f"📂{get_size(file.file_size)}",
-                    callback_data=f'files_#{file.file_id}',
-                ),
+                    text=f"{get_size(file.file_size)}",
+                    callback_data=f'{pre}_#{file.file_id}#{query.from_user.id}',
+                )
             ]
             for file in files
         ]
