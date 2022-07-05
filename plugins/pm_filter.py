@@ -1357,8 +1357,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer("⚠️ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ ⚠️\n.......................................\n\nᴀꜰᴛᴇʀ 5 ᴍɪɴᴜᴛᴇꜱ ᴛʜɪꜱ ᴍᴀꜱꜱᴀɢᴇ ᴡɪʟʟ ʙᴇ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴅᴇʟᴇᴛᴇᴅ.\n\nɪғ ʏᴏᴜ ᴅᴏ ɴᴏᴛ sᴇᴇ ᴛʜᴇ ʀᴇǫᴜᴇsᴛᴇᴅ ᴍᴏᴠɪᴇ/sᴇʀɪᴇs ғɪʟᴇ, ʟᴏᴏᴋ ᴀᴛ ᴛʜᴇ ɴᴇxᴛ ᴘᴀɢᴇ 🤗", True)
     elif query.data == 'pk':
         await query.answer("ꜱᴇʀɪᴇꜱ ʀᴇǫᴜᴇꜱᴛ ꜰᴏʀᴍᴀᴛ\n\nɢᴏ ᴛᴏ ɢᴏᴏɢʟᴇ »» ᴛʏᴘᴇ ᴍᴏᴠɪᴇ ɴᴀᴍᴇ »» ᴄᴏᴘʏ ᴄᴏʀʀᴇᴄᴛ ɴᴀᴍᴇ »» ᴘᴀꜱᴛᴇ ᴛʜɪꜱ ɢʀᴏᴜᴩ\n\nᴇxᴀᴍᴩʟᴇ : Dark or Dark S01E1\n\nメ ᴅᴏɴᴛ ᴜꜱᴇ ➜ !:(!;/)-_.)\n\n©️ ᴅᴡʟ ᴀᴜᴛᴏ ғɪʟᴛᴇʀ ʙᴏᴛ", True)
-    elif query.data == 'sorse':
-        await query.answer("ᴛʜɪs ʙᴏᴛ ɴᴏᴛ ᴀ ᴏᴘᴇɴ ꜱᴏᴜʀᴄᴇ ᴩʀᴏᴊᴇᴄᴛ 🤧", True)  
 
 
 async def auto_filter(client, msg, spoll=False):
@@ -1380,12 +1378,16 @@ async def auto_filter(client, msg, spoll=False):
         settings = await get_settings(msg.message.chat.id)
         message = msg.message.reply_to_message  # msg will be callback query
         search, files, offset, total_results = spoll
+    
     pre = 'filep' if settings['file_secure'] else 'file'
+    pre = 'Chat' if settings['redirect_to'] == 'Chat' else pre
+
     if settings["button"]:
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"📂 [{get_size(file.file_size)}] {file.file_name}", callback_data=f'files#{file.file_id}'
+                    text=f"📂 [{get_size(file.file_size)}] {file.file_name}", 
+                        callback_data=f'{pre}#{file.file_id}#{msg.from_user.id if msg.from_user is not None else 0}'
                 ),
             ]
             for file in files
@@ -1394,12 +1396,12 @@ async def auto_filter(client, msg, spoll=False):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"📂{file.file_name}",
-                    callback_data=f'files#{file.file_id}',
+                    text=f"📂 [{get_size(file.file_size)}] {file.file_name}", 
+                        callback_data=f'{pre}#{file.file_id}#{msg.from_user.id if msg.from_user is not None else 0}',
                 ),
                 InlineKeyboardButton(
-                    text=f"📂{get_size(file.file_size)}",
-                    callback_data=f'files_#{file.file_id}',
+                    text=f"📂 [{get_size(file.file_size)}] {file.file_name}", 
+                        callback_data=f'{pre}#{file.file_id}#{msg.from_user.id if msg.from_user is not None else 0}'',
                 ),
             ]
             for file in files
