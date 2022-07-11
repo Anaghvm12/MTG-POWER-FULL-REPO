@@ -42,6 +42,7 @@ async def start(client, message):
             InlineKeyboardButton('➕ 𝖠𝖽𝖽 𝖬𝖾 𝖳𝗈 𝖸𝗈𝗎𝗋 𝖦𝗋𝗈𝗎𝗉 ➕', url='http://t.me/MTG_Movie_Bot?startgroup=true')             
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
+        await message.reply_chat_action("typing")
         await message.reply_photo(
             photo=random.choice(PICS),
             caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
@@ -77,6 +78,7 @@ async def start(client, message):
             InlineKeyboardButton('➕ 𝖠𝖽𝖽 𝖬𝖾 𝖳𝗈 𝖸𝗈𝗎𝗋 𝖦𝗋𝗈𝗎𝗉 ➕', url='http://t.me/MTG_Movie_Bot?startgroup=true')             
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
+        await message.reply_chat_action("typing")
         await message.reply_photo(
             photo=random.choice(PICS),
             caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
