@@ -212,18 +212,26 @@ async def next_page(bot, query):
         off_set = offset - 10
     if n_offset == 0:
         btn.append(
-            [InlineKeyboardButton("⬅️ 𝖡ᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"), InlineKeyboardButton(f"📋 𝖯ᴀɢᴇs {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages")]
+            [InlineKeyboardButton("ᴘᴀɢᴇs", callback_data="pages"),
+             InlineKeyboardButton(f"{round(int(offset) / 10) + 1} / {round(total / 10)}",
+                                  callback_data="pages"),
+             InlineKeyboardButton("‹ ʙᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}")]
         )
     elif off_set is None:
-        btn.append([InlineKeyboardButton(f"🗓 {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages"), InlineKeyboardButton("𝖭ᴇxᴛ ➡️", callback_data=f"next_{req}_{key}_{n_offset}")])
+        btn.append(
+            [
+                InlineKeyboardButton("ᴘᴀɢᴇs", callback_data="pages"),
+                InlineKeyboardButton(f"{round(int(offset) / 10) + 1} / {round(total / 10)}", callback_data="pages"),
+                InlineKeyboardButton("ɴᴇxᴛ ›", callback_data=f"next_{req}_{key}_{n_offset}")]
+        )
     else:
         btn.append(
             [
-                InlineKeyboardButton("⬅️ 𝖡ᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
-                InlineKeyboardButton(f"🗓 {round(int(offset)/10)+1} / {round(total/10)}", callback_data="pages"),
-                InlineKeyboardButton("𝖭ᴇxᴛ ➡️", callback_data=f"next_{req}_{key}_{n_offset}")
-            ],
+                InlineKeyboardButton("‹ ʙᴀᴄᴋ", callback_data=f"next_{req}_{key}_{off_set}"),
+                InlineKeyboardButton(f"{round(int(offset) / 10) + 1} / {round(total / 10)}", callback_data="pages"),
+                InlineKeyboardButton("ɴᴇxᴛ ›", callback_data=f"next_{req}_{key}_{n_offset}")]
         )
+
     try:
         await query.edit_message_reply_markup( 
             reply_markup=InlineKeyboardMarkup(btn)
