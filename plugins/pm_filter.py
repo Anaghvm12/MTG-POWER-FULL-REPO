@@ -975,7 +975,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == "owner":
         buttons = [[
             InlineKeyboardButton('👥 ᴄᴏɴᴛᴀᴄᴛ', callback_data='contact'),
-            InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='help')
+            InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='start')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
