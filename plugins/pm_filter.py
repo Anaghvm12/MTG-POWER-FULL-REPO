@@ -749,9 +749,29 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await removebg_sticker(client, query.message)
     elif query.data == "pages":
         await query.answer()
+    elif query.data == "MTG":
+        buttons = [[
+
+            InlineKeyboardButton('ᴄʟɪᴄᴋ ʜᴇʀᴇ ꜰᴏʀ ᴍᴏʀᴇ ʙᴜᴛᴛᴏɴꜱ', callback_data='start')
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await query.message.edit_text(        
+            text=script.START_TXT.format(query.from_user.mention, temp.U_NAME, temp.B_NAME),
+            reply_markup=reply_markup,
+            parse_mode='html'
+        )
+        await query.answer('sᴜᴘᴘᴏʀᴛ')
     elif query.data == "start":
         buttons = [[
-            InlineKeyboardButton('➕ 𝖠𝖽𝖽 𝖬𝖾 𝖳𝗈 𝖸𝗈𝗎𝗋 𝖦𝗋𝗈𝗎𝗉 ➕', url='http://t.me/MTG_Movie_Bot?startgroup=true')
+            InlineKeyboardButton('➕️ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕️', url='http://t.me/MTG_Movie_Bot?startgroup=true')
+            ],[
+            InlineKeyboardButton('📈 sᴛᴀᴛᴜs', callback_data='stats'),
+            InlineKeyboardButton('👤 ᴏᴡɴᴇʀ', callback_data='owner')
+            ],[
+            InlineKeyboardButton('⚙️ ʜᴇʟᴩ', callback_data='help'),
+            InlineKeyboardButton('🔰 ᴀʙᴏᴜᴛ', callback_data='about')           
+            ],[
+            InlineKeyboardButton('ᴄʟᴏsᴇ ʏᴏᴜʀ ʙᴜᴛᴛᴏɴs', callback_data='MTG')
         ]]
         reply1 = await query.message.reply_text(
             text="□□□"
@@ -952,6 +972,15 @@ async def cb_handler(client: Client, query: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode='html'
         )
+    elif query.data == "owner":
+        buttons = [[
+            InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='help')
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await query.message.edit_text(
+            text=script.OWNER_TXT,
+            reply_markup=reply_markup,
+            parse_mode='html'
     elif query.data == "abook":
         buttons = [[
             InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='help')
