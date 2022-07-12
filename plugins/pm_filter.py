@@ -974,6 +974,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "owner":
         buttons = [[
+            InlineKeyboardButton('👥 ᴄᴏɴᴛᴀᴄᴛ', callback_data='contact'),
             InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='help')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -1389,6 +1390,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer("⚠️ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ ⚠️\n.......................................\n\nᴀꜰᴛᴇʀ 5 ᴍɪɴᴜᴛᴇꜱ ᴛʜɪꜱ ᴍᴀꜱꜱᴀɢᴇ ᴡɪʟʟ ʙᴇ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴅᴇʟᴇᴛᴇᴅ.\n\nɪғ ʏᴏᴜ ᴅᴏ ɴᴏᴛ sᴇᴇ ᴛʜᴇ ʀᴇǫᴜᴇsᴛᴇᴅ ᴍᴏᴠɪᴇ/sᴇʀɪᴇs ғɪʟᴇ, ʟᴏᴏᴋ ᴀᴛ ᴛʜᴇ ɴᴇxᴛ ᴘᴀɢᴇ 🤗", True)
     elif query.data == 'pk':
         await query.answer("ꜱᴇʀɪᴇꜱ ʀᴇǫᴜᴇꜱᴛ ꜰᴏʀᴍᴀᴛ\n\nɢᴏ ᴛᴏ ɢᴏᴏɢʟᴇ ❥︎ ᴛʏᴘᴇ ᴍᴏᴠɪᴇ ɴᴀᴍᴇ ❥︎ ᴄᴏᴘʏ ᴄᴏʀʀᴇᴄᴛ ɴᴀᴍᴇ ❥︎ ᴘᴀꜱᴛᴇ ᴛʜɪꜱ ɢʀᴏᴜᴩ\n\nᴇxᴀᴍᴩʟᴇ : sᴛʀᴀɴɢᴇʀ ᴛʜɪɴɢᴅ or sᴛʀᴀɴɢᴇʀ ᴛʜɪɴɢs S01E1\n\nメ ᴅᴏɴᴛ ᴜꜱᴇ ➜ !:(!;/)-_.)\n\n©️ ᴍᴛɢ ᴍᴏᴠɪᴇ ʙᴏᴛ", True)
+    elif query.data == 'contact':
+        await query.answer("ᴅᴏɴᴛ ᴄᴏɴᴛᴀᴄᴛ ᴍᴇ \n ɪ sᴄᴀᴍ ʏᴏᴜ")
 
 
 async def auto_filter(client, msg, spoll=False):
