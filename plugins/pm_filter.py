@@ -982,6 +982,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             text=script.OWNER_TXT,
             reply_markup=reply_markup,
             parse_mode='html'
+        )
     elif query.data == "abook":
         buttons = [[
             InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='help')
