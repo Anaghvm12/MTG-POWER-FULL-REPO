@@ -779,7 +779,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             InlineKeyboardButton('⚙️ ʜᴇʟᴩ', callback_data='help'),
             InlineKeyboardButton('🔰 ᴀʙᴏᴜᴛ', callback_data='about')           
             ],[
-            InlineKeyboardButton('ᴄʟᴏsᴇ ʏᴏᴜʀ ʙᴜᴛᴛᴏɴs', callback_data='MTG')
+            InlineKeyboardButton('ᴄʟɪᴄᴋ ᴛᴏ ᴄʟᴏsᴇ ᴛʜɪs ʙᴜᴛᴛᴏɴs', callback_data='MTG')
         ]]
         reply1 = await query.message.reply_text(
             text="□□□"
