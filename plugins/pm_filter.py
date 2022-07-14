@@ -238,14 +238,14 @@ async def next_page(bot, query):
         pass
     await query.answer()
 
-@Client.on_callbackok_query(filters.regex(r"^spolling"))
+@Client.on_callback_query(filters.regex(r"^spolling"))
 async def advantage_spoll_choker(bot, query):
     _, user, movie_ = query.data.split('#')
     if int(user) != 0 and query.from_user.id != int(user):
         return await query.answer(f"⚠️ Hey, {query.from_user.first_name}! Search Your Own File, Don't Click Others Results 😬", show_alert=True)
     if movie_  == "close_spellcheck":
         return await query.message.delete()
-    movies = 
+    movies = SPELL_CHECK.get(query.message.reply_to_message.message_id)
     if not movies:
         return await query.answer(f"⚠️ Hey, {query.from_user.first_name}! You are clicking on an old button which is expired ⚠️", show_alert=True)
     movie = movies[(int(movie_))]
