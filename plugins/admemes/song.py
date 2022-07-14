@@ -67,8 +67,8 @@ def song(client, message):
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
         rep = f"""
-ᴛɪᴛʟᴇ ›› [{title}]
-ᴅᴜʀᴀᴛɪᴏɴ ›› {duration} | {views}
+<b>ᴛɪᴛʟᴇ ›› [{title}]</b>
+<b>ᴅᴜʀᴀᴛɪᴏɴ ›› {duration} | {views}</b>
 """
         secmul, dur, dur_arr = 1, 0, duration.split(':')
         for i in range(len(dur_arr)-1, -1, -1):
