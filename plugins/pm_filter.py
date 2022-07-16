@@ -1285,7 +1285,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )
     elif query.data == "stats":
         buttons = [[
-            InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='help'),
+            InlineKeyboardButton('⬅️ ʙᴀᴄᴋ', callback_data='start'),
             InlineKeyboardButton('ʀᴇғʀᴇsʜ 🔃', callback_data='rfrsh')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -1384,7 +1384,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == 'pk':
         await query.answer("ꜱᴇʀɪᴇꜱ ʀᴇǫᴜᴇꜱᴛ ꜰᴏʀᴍᴀᴛ\n\nɢᴏ ᴛᴏ ɢᴏᴏɢʟᴇ ❥︎ ᴛʏᴘᴇ ᴍᴏᴠɪᴇ ɴᴀᴍᴇ ❥︎ ᴄᴏᴘʏ ᴄᴏʀʀᴇᴄᴛ ɴᴀᴍᴇ ❥︎ ᴘᴀꜱᴛᴇ ᴛʜɪꜱ ɢʀᴏᴜᴩ\n\nᴇxᴀᴍᴩʟᴇ : sᴛʀᴀɴɢᴇʀ ᴛʜɪɴɢᴅ or sᴛʀᴀɴɢᴇʀ ᴛʜɪɴɢs S01E1\n\nメ ᴅᴏɴᴛ ᴜꜱᴇ ➜ !:(!;/)-_.)\n\n©️ ᴍᴛɢ ᴍᴏᴠɪᴇ ʙᴏᴛ", True)
     elif query.data == 'contact':
-        await query.answer("ᴅᴏɴᴛ ᴄᴏɴᴛᴀᴄᴛ ᴍᴇ \n ɪ sᴄᴀᴍ ʏᴏᴜ")
+        await query.answer("ᴅᴏɴᴛ ᴄᴏɴᴛᴀᴄᴛ ᴍᴇ \n ɪ sᴄᴀᴍ ʏᴏᴜ", True)
 
 
 async def auto_filter(client, msg, spoll=False):
